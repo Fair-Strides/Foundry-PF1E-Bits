@@ -1,0 +1,242 @@
+{
+  "name": "Breath Weapon",
+  "type": "attack",
+  "img": "systems/pf1/icons/skills/blue_13.jpg",
+  "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
+    "tags": [],
+    "actions": [
+      {
+        "_id": "i771xwamw0n7krsn",
+        "name": "Attack",
+        "img": "systems/pf1/icons/skills/blue_13.jpg",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": null,
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "cone",
+          "size": "20",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "save",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "2d8"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": [],
+          "parts[0][0]": "2d8"
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "10+floor( @classes.dragon.level / 2)+ @abilities.con.mod",
+          "type": "ref",
+          "description": "Reflex for half"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "attackNotes": [],
+    "effectNotes": [],
+    "links": {
+      "children": [],
+      "charges": [],
+      "ammunition": []
+    },
+    "tag": "",
+    "useCustomTag": false,
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "masterwork": false,
+    "enh": null,
+    "proficient": true,
+    "primaryAttack": true,
+    "held": "normal",
+    "showInQuickbar": true,
+    "broken": false,
+    "ammoType": "",
+    "attackType": "racialAbility",
+    "activation": {
+      "cost": 1,
+      "type": ""
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": ""
+      }
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
+    "measureTemplate": {
+      "type": "cone",
+      "size": "20",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "save",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [
+        [
+          "2d8"
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": [],
+      "parts[0][0]": "2d8"
+    },
+    "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": null,
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "10+floor( @classes.dragon.level / 2)+ @abilities.con.mod",
+      "type": "ref",
+      "description": "Reflex for half"
+    },
+    "soundEffect": "",
+    "powerAttack": {
+      "multiplier": "",
+      "damageBonus": 2,
+      "critMultiplier": 1
+    },
+    "nonlethal": false,
+    "conditionals": [],
+    "usesAmmo": false,
+    "size": "med",
+    "identifiedName": "Breath Weapon"
+  },
+  "effects": [],
+  "flags": {
+    "core": {
+      "sourceId": "Item.9ZkS9cKRFOABNrD6"
+    },
+    "exportSource": {
+      "world": "sam's_rotrl",
+      "system": "pf1",
+      "coreVersion": "9.269",
+      "systemVersion": "0.81.0"
+    }
+  }
+}
