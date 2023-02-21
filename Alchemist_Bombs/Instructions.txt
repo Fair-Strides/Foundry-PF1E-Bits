@@ -1,3 +1,4 @@
-1. Set the Auto-Deduct Charges to zero.
-2. Set the Attack Count Formula to "min(@item.uses.value, ceil(@attributes.bab.total / 5)) - 1" (without the " marks) in the Formulaic Extra Attacks section of the attack/action.
-3. Copy and paste the contents of "use_bomb.js" into a new script macro under the "Use" event on the Advanced tab of the attack.
+1. Set the Charge Cost Formula to zero.
+2. Open the Action of the Bomb you want to edit (by default, the Use action is the default Alchemist Bomb, but you might have Bomb Discoveries).
+3. Set the Attack Count Formula on the "Action" tab to "min(@item.uses.value, ceil(@attributes.bab.total / 5) - 1)" (without the " marks) in the "Formulaic Extra Attacks" section of the attack/action.
+3. Copy and paste the contents of "use_bomb.js" into a new script macro under the "Use" event on the Advanced tab of the attack or bomb feature.
