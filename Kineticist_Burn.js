@@ -1,9 +1,9 @@
 const opt = {
     // ownerChentric
     // true = speaker > selected > configured  – great for very owner centric selection
-    // false = selected > configured > speaker – great for flexibility on who rolls (for requesting rolls, better for most circumstances)
+    // false = selected > configured > speaker – great for flexibility on who rolls (for requesting rolls, better for most circumstances)
     bOwnerCentric: false, // Favor owner. If False, favors configuration/selection.
-    bCountUp: false,
+    bCountUp: true,
     bIgnoreCap: false,
     bIsInfusion: false,
     bHasSuperCharge: false,
@@ -35,7 +35,7 @@ const actors = opt.ownerCentric
 	firstNonEmpty(
 	    canvas.tokens.controlled.map(t => t.actor),
 		[game.user.character])
-	: // selected > configured > speaker – great for flexibility on who rolls
+	: // selected > configured > speaker – great for flexibility on who rolls
 	firstNonEmpty(
 		canvas.tokens.controlled.map(t => t.actor),
 		[game.user.character]);
@@ -45,12 +45,13 @@ if (!actors.length) {
     return;
 }
 
-opt.iKineticistLevel = actors[0].data.data.classes.kineticist?.level ?? 0;
+opt.iKineticistLevel = actors[0].classes.kineticist?.level ?? 0;
 opt.iInfusionSpecialLevel = Math.max(0, Math.floor((opt.iKineticistLevel - 2) / 3));
+opt.bHasSuperCharge = actors[0].classes.kineticist?.level > 10 ?? false;
 
-let burnResource = actors[0].items.find(o => o.data.data.tag === opt.sBurnTag);
+let burnResource = actors[0].items.find(o => o.system.tag === opt.sBurnTag);
 if(burnResource === undefined) {
-    burnResource = actors[0].items.find(o => o.data.data.tag === opt.sBurnTagAlt);
+    burnResource = actors[0].items.find(o => o.system.tag === opt.sBurnTagAlt);
     if(burnResource === undefined) {
         ui.notifications.error("No Burn resource on " + actors[0].name);
         return;
@@ -78,33 +79,33 @@ console.log("FS | Burn Cost 6: ", burnCost);
 
     if(burnCost > 0) {
         if(opt.bIgnoreCap === false) {
-            if((Math.abs(burnResource.data.data.uses.max - burnResource.data.data.uses.value)) < burnCost) {
+            if((Math.abs(burnResource.system.uses.max - burnResource.system.uses.value)) < burnCost) {
                 ui.notifications.warn(burnVictim.name + " does not have enough Burn to spend.");
                 return;
             }
         }
 
         if(opt.bCountUp === false) {
-            burnResource.update({"data.uses.value": burnResource.data.data.uses.value - burnCost});
+            burnResource.update({"system.uses.value": burnResource.system.uses.value - burnCost});
         }
         else {
-            burnResource.update({"data.uses.value": burnResource.data.data.uses.value + burnCost});
+            burnResource.update({"system.uses.value": burnResource.system.uses.value + burnCost});
         }
 
         burnVictim.updateEmbeddedDocuments("Item", [{ _id: burnResource.id}]);
 
         if(opt.bNonlethal === true) {
-            console.log("FS | Dealing Nonlethal: ", opt.iKineticistLevel, " * ", burnCost, " = ", (opt.iKineticistLevel * burnCost));
-            burnVictim.update({"data.attributes.hp.nonlethal": burnVictim.data.data.attributes.hp.nonlethal + (opt.iKineticistLevel * burnCost)});
+  //          console.log("FS | Dealing Nonlethal: ", opt.iKineticistLevel, " * ", burnCost, " = ", (opt.iKineticistLevel * burnCost));
+            burnVictim.update({"system.attributes.hp.nonlethal": burnVictim.system.attributes.hp.nonlethal + (opt.iKineticistLevel * burnCost)});
         }
     }
     this.close();
 }
 
 async function toggleInfusion() {
-console.log("FS | bIsInfusion before: ", opt.bIsInfusion);
+//console.log("FS | bIsInfusion before: ", opt.bIsInfusion);
     opt.bIsInfusion = !opt.bIsInfusion;
-console.log("FS | bIsInfusion after: ", opt.bIsInfusion);
+//console.log("FS | bIsInfusion after: ", opt.bIsInfusion);
 //    if(opt.bIsInfusion === 1) { opt.bIsInfusion = 0; }
 //    else { opt.bIsInfusion = 1; }
 }
@@ -126,9 +127,9 @@ async function toggleSuperCharge() {
 }
 
 async function selectGatherPower(event) {
-    console.log("FS | Gather Power Cost before: ", opt.iGatherPowerCost);
+//    console.log("FS | Gather Power Cost before: ", opt.iGatherPowerCost);
     opt.iGatherPowerCost = event.target.value;
-    console.log("FS | Gather Power Cost after: ", opt.iGatherPowerCost);
+//    console.log("FS | Gather Power Cost after: ", opt.iGatherPowerCost);
 }
 
 async function selectMetaKinesis(event) {
@@ -136,7 +137,6 @@ async function selectMetaKinesis(event) {
 }
 
 async function setClassLevel(event) {
-console.log("FS | Event: ", event);
     opt.iKineticistLevel = event.target.value;
 }
 
@@ -183,7 +183,7 @@ let html = `<div>
 <div>
   <div class='flexrow'>
     <label for="CountBox">Use counts up?: </label>
-    <input type="checkbox" name="CountBox" id="CountBox" value='${opt.bCountUp}'></input>
+    <input type="checkbox" name="CountBox" id="CountBox" value='${opt.bCountUp}' checked></input>
   </div>
   <div class='flexrow'>
     <label for="BurnCapBox">Ignore Burn cap?: </label>
@@ -191,7 +191,7 @@ let html = `<div>
   </div>
   <div class='flexrow'>
     <label for="DamageBox">Deal nonlethal?: </label>
-    <input type="checkbox" name="DamageBox" id="DamageBox" value='${opt.bNonlethal}' checked></input>
+    <input type="checkbox" name="DamageBox" id="DamageBox" value='${opt.bNonlethal} checked' checked></input>
   </div>
   <div class='flexrow'>
     <label for="IsInfusionBox">Is using an Infusion?: </label>
@@ -199,7 +199,11 @@ let html = `<div>
   </div>
   <div class='flexrow'>
     <label for="SuperChargeBox">Can Supercharge?: </label>
-    <input type="checkbox" name="SuperChargeBox" id="SuperChargeBox" value='${opt.bHasSuperCharge}'></input>
+    <input type="checkbox" name="SuperChargeBox" id="SuperChargeBox" value='${opt.bHasSuperCharge}'`;
+
+if(opt.bHasSuperCharge === true) { html += `checked`; }
+
+	html += `></input>
   </div>
 </div>
 <div>
