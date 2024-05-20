@@ -1,9 +1,12 @@
 let theActor = token?.actor ?? actor;
-let newUses = item.system.uses.value - shared.attackData.attacks.length;
+let attackUses = shared.attackData.attacks.length;
+let newUses = item.system.uses.value - attackUses;
 
-if( item.links?.charges?._id !== undefined) {
-    await theActor.updateEmbeddedDocuments("Item", [{_id: item.links.charges.id, 'system.uses.value': newUses}]);
+if(newUses < 0) shared.reject = true;
+else if( item.links?.charges?._id !== undefined) {
+    const chargeItem = theActor.items.find(i => i.id === item.links.charges.id);
+    await chargeItem?.addCharges(-attackUses);
 }
 else {
-    await theActor.updateEmbeddedDocuments("Item", [{_id: item.id, 'system.uses.value': newUses}]);
+    await item.addCharges(-attackUses);
 }
